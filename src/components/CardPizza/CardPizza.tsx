@@ -9,8 +9,9 @@ interface Props {
 }
 
 export const CardPizza = ({ pizza }: Props) => {
-	//hola
+	
 	console.log("pizza");
+	console.log(pizza.category);
 	
 	return (
 		<Flex w={'100%'} flexDir="column" maxW={'300px'} textAlign="center">
