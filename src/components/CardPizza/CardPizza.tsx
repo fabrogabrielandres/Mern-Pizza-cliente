@@ -1,57 +1,104 @@
+import React, { useState } from 'react';
 import { Button } from '@chakra-ui/button';
 import { Img } from '@chakra-ui/image';
-import { Box, Flex, HStack } from '@chakra-ui/layout';
+import { Box, Flex, Text } from '@chakra-ui/layout';
 import { Select } from '@chakra-ui/select';
-import React from 'react';
 import { Pizza } from '../../../Interfaces/PizzaInterface';
+
+import {
+	Modal,
+	ModalBody,
+	useDisclosure,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay
+} from '@chakra-ui/react';
 
 interface Props {
 	pizza: Pizza;
 }
 
 export const CardPizza = ({ pizza }: Props) => {
-	let valor = 'precio';
+	const [ quantifyPizza, setQuantifyPizza ] = useState(1);
+	const [ varientPizza, setVarientPizza ] = useState<string>('small');
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	return (
-		<Flex w={'100%'} flexDir="column" maxW={'300px'} textAlign="center" boxShadow="xl">
-			<h1>{pizza.name}</h1>
-			<Img
-				src={pizza.image}
-				alt={pizza.name}
-				pt={'15px'}
-				h={'200px'}
-				w={'200px'}
-				objectFit="cover"
-				alignSelf="center"
-			/>
-			<Flex justifyContent="space-around" >
-				<Box>
-					<p>Varientes</p>
-					<Select size="sm">
-						{pizza.varients.map((varient, idx) => {
-							return (
-								<option key={idx} value={varient}>
-									{varient}
-								</option>
-							);
-						})}
-					</Select>
-				</Box>
-				<Box>
-					<p>Quantify</p>
-					<Select size="sm">
-						{[ ...Array(10).keys() ].map((i, idx) => {
-							return <option value={i + 1}>{i + 1}</option>;
-						})}
-					</Select>
-				</Box>
+		<>
+			<Flex w={'100%'} flexDir="column" maxW={'300px'} textAlign="center" boxShadow="xl">
+				<h1>{pizza.name}</h1>
+				<Img
+					src={pizza.image}
+					alt={pizza.name}
+					pt={'15px'}
+					h={'200px'}
+					w={'200px'}
+					objectFit="cover"
+					alignSelf="center"
+					onClick={onOpen}
+					cursor="pointer"
+				/>
+				<Flex justifyContent="space-around">
+					<Box>
+						<p>Varientes</p>
+						<Select
+							size="sm"
+							onChange={(e) => {
+								setVarientPizza(e.target.value);
+							}}
+						>
+							{pizza.varients.map((varient, idx) => {
+								return (
+									<option key={idx} value={varient}>
+										{varient}
+									</option>
+								);
+							})}
+						</Select>
+					</Box>
+					<Box>
+						<p>Quantify</p>
+						<Select
+							size="sm"
+							onChange={(e) => {
+								setQuantifyPizza(parseInt(e.target.value));
+							}}
+						>
+							{[ ...Array(10).keys() ].map((i, idx) => {
+								return (
+									<option key={idx} value={i + 1}>
+										{i + 1}
+									</option>
+								);
+							})}
+						</Select>
+					</Box>
+				</Flex>
+				<Flex justify="space-around" alignItems="center" m="20px 0 20px 0">
+					<span>{`Price: $${pizza.prices[0][varientPizza] * quantifyPizza}`}</span>
+					<Button bg="red" color="white" size="md">
+						Add To Cart
+					</Button>
+				</Flex>
 			</Flex>
-			<Flex justify="space-around" alignItems="center" m="20px 0 20px 0" >
-				<span>{`Price: $${valor}`}</span>
-				<Button bg="red" color="white" size="md">
-					Add To Cart
-				</Button>
-			</Flex>
-		</Flex>
+			<Modal isOpen={isOpen} onClose={onClose}>
+					<ModalOverlay />
+					<ModalContent textAlign="center">
+						<ModalHeader>{pizza.name}</ModalHeader>
+						<Img src={pizza.image}/>
+						
+						<ModalBody>
+							<Text>{pizza.description}</Text>
+						</ModalBody>
+
+						<ModalFooter>
+							<Button colorScheme="red" mr={3} onClick={onClose}>
+								Close
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
+		</>
 	);
 };
