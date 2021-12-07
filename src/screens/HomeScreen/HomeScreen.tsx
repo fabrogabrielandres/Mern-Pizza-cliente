@@ -8,11 +8,11 @@ export const HomeScreen = (): ReactElement => {
 	
 	
 	return (
-		<Flex flexDir="row" flexWrap={"wrap"} justifyContent="flex-end" mt={"50px"}>
+		<Flex flexDir="row" flexWrap={"wrap"} mt={"50px"}>
 			{pizzas.map((pizza, idx) => (
-				<Box key={idx} w={"30%"} m={"10px"}>
+				<Flex key={idx} w={"30%"} m={"10px"} justifyContent="center" >
 					<CardPizza pizza={pizza as Pizza} />
-				</Box>
+				</Flex>
 			))}
 		</Flex>
 	);

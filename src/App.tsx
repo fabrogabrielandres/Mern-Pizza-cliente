@@ -6,10 +6,10 @@ import { ReactElement } from 'react';
 
 export const App = (): ReactElement => (
 	<ChakraProvider theme={theme}>
-		<Box position="relative" h="100vh">
+		<Box h="150%">
 			<Navbar />
 			<HomeScreen />
-			<ColorModeSwitcher position="absolute" bottom={0} right={0} margin={[ 10, 15, 10, 15 ]} />
+			<ColorModeSwitcher position="fixed" bottom={0} right={0}/>
 		</Box>
 	</ChakraProvider>
 );
