@@ -1,47 +1,43 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { Pizza } from '../../../Interfaces/PizzaInterface';
 
-const getAllPizzasReducer = createAsyncThunk('pizza/getAllPizzas', async () => {
+
+export const getAllPizzasReducer = createAsyncThunk('pizza/getAllPizzas', async () => {
 	try {
-		const response = await axios.get(`/api/pizzas/getpizzas`);
-		console.log(response);
-		return response
-		
+		const response = await axios.get(`api/pizzas/getallpizzas`);
+		return response.data;
 	} catch (error) {
-		return error
+		return error;
 	}
-});
-
-
+})as any;
 
 export interface PizzaState {
-	success:string,
+	success: string;
+	pizzas: Pizza[];
 }
 
 const initialState: PizzaState = {
-	success:""
+	success: '',
+	pizzas: []
 };
 
 export const pizzaSlice = createSlice({
 	name: 'pizza',
 	initialState,
 	reducers: {},
-	extraReducers:{
-		[getAllPizzasReducer.pending]:(state,action)=>{
-			state.success="pending";
+	extraReducers: {
+		[getAllPizzasReducer.pending]: (state, action) => {
+			state.success = 'pending';
 		},
-		[getAllPizzasReducer.fulfilled]:(state,action)=>{
-			state.success="succes";
+		[getAllPizzasReducer.fulfilled]: (state, action) => {
+			state.success = 'succes';			
+			state.pizzas=[...action.payload]
 		},
-		[getAllPizzasReducer.rejected]:(state,action)=>{
-			state.success="rejected";
+		[getAllPizzasReducer.rejected]: (state, action) => {
+			state.success = 'rejected';
 		}
-
-
 	}
 });
-
-// Action creators are generated for each case reducer function
-export const {} = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

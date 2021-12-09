@@ -1,4 +1,3 @@
-import { Button } from '@chakra-ui/button';
 import { Box, Flex } from '@chakra-ui/layout';
 import React, { ReactElement } from 'react';
 
