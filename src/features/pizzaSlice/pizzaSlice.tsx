@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Pizza } from '../../../Interfaces/PizzaInterface';
 
-
 export const getAllPizzasReducer = createAsyncThunk('pizza/getAllPizzas', async () => {
 	try {
 		const response = await axios.get(`api/pizzas/getallpizzas`);
@@ -10,16 +9,16 @@ export const getAllPizzasReducer = createAsyncThunk('pizza/getAllPizzas', async 
 	} catch (error) {
 		return error;
 	}
-})as any;
+}) as any;
 
 export interface PizzaState {
-	success: string;
 	pizzas: Pizza[];
+	error: boolean;
 }
 
 const initialState: PizzaState = {
-	success: '',
-	pizzas: []
+	pizzas: [],
+	error: false
 };
 
 export const pizzaSlice = createSlice({
@@ -28,14 +27,14 @@ export const pizzaSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[getAllPizzasReducer.pending]: (state, action) => {
-			state.success = 'pending';
+			state.error = false;
 		},
 		[getAllPizzasReducer.fulfilled]: (state, action) => {
-			state.success = 'succes';			
-			state.pizzas=[...action.payload]
+			state.pizzas = action.payload;
+			state.error = true;
 		},
 		[getAllPizzasReducer.rejected]: (state, action) => {
-			state.success = 'rejected';
+			state.error = true;
 		}
 	}
 });
