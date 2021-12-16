@@ -31,7 +31,7 @@ export const CardPizza = ({ pizza }: Props) => {
 	
 	return (
 		<>
-			<Flex w={'100%'} flexDir="column" maxW={'300px'} textAlign="center" boxShadow="xl">
+			<Flex flexDir="column" border={"red 2px solid"} m={3} minWidth='300px' textAlign="center" boxShadow="xl">
 				<h1>{pizza.name}</h1>
 				<Img
 					src={pizza.image}

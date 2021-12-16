@@ -18,13 +18,9 @@ export const HomeScreen = () => {
 	const { error, pizzas } = pizza;
 
 	return (
-		<Flex flexDir="row" flexWrap={'wrap'} mt={'50px'}>
+		<Flex flexDir="row" flexWrap="wrap" justifyContent="space-around" mt={'50px'}>
 			{pizzas.length > 0 ? (
-				pizzas.map((pizza, idx) => (
-					<Flex key={idx} w={'30%'} m={'10px'} justifyContent="center">
-						<CardPizza pizza={pizza} />
-					</Flex>
-				))
+				pizzas.map((pizza, idx) => <CardPizza pizza={pizza} />)
 			) : error ? (
 				<h1>algo se rompio</h1>
 			) : (
