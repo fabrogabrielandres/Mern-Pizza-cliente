@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Flex, Img, VStack } from '@chakra-ui/react';
 import { Text, Box } from '@chakra-ui/layout';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -25,7 +25,22 @@ export const CartScreen = () => {
 			onClick={() => dispatch(addToCart({ ...items, quantify: items.quantify + 1 }))}
 		/>
 	);
-	const deleteItems = (items: CartItem) => <HiTrash color="red" size={'70%'} onClick={() => dispatch(deleteToCart(items))} />;
+	const deleteItems = (items: CartItem) => (
+		<HiTrash color="red" size={'70%'} onClick={() => dispatch(deleteToCart(items))} />
+	);
+
+	const total = (cartItems: CartItem[]) => {
+		return cartItems.reduce((acc, items) => {
+			return acc + items.quantify * items.prices[0][items.varient];
+		}, 0);
+	};
+
+	useEffect(
+		() => {
+			console.log(total(cartItems));
+		},
+		[ cartItems ]
+	);
 
 	return (
 		<Flex mt={'5%'}>
@@ -45,7 +60,7 @@ export const CartScreen = () => {
 								<Text>{`${items.name}`}</Text>
 								<Text>{`Price: ${items.quantify} * ${items.prices[0][
 									items.varient
-								]} = ${items.price}`}</Text>
+								]} = ${items.quantify * items.prices[0][items.varient]}`}</Text>
 							</VStack>
 							<Flex alignItems={'center'} h={'100px'} width={'20%'}>
 								<Box width={'100%'}>
@@ -73,7 +88,7 @@ export const CartScreen = () => {
 				)}
 			</Flex>
 			<Flex flexDir="column" m={'5%'}>
-				<Text mb={10}>{`SubTotal = ${'0000'}`}</Text>
+				<Text mb={10}>{`SubTotal = ${total(cartItems)}`}</Text>
 				<Button background="red" color="white">
 					Pay Now
 				</Button>
