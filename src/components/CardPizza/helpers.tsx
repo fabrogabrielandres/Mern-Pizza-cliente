@@ -7,7 +7,8 @@ export const processDataBeforeAdding = (pizza: Pizza, quantify: number, varient:
 		image: pizza.image,
 		prices: pizza.prices,
 		price: pizza.prices[0][varient] * quantify,
-		quantify
+		quantify,
+		varient
 	};
 	return cartItem
 };

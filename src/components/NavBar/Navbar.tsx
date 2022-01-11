@@ -1,28 +1,26 @@
-import { Box, Flex } from '@chakra-ui/layout';
+import { Box, Flex, Text } from '@chakra-ui/layout';
 import React, { ReactElement } from 'react';
 import { useSelector, RootStateOrAny } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { CartItem } from '../../../Interfaces/PizzaInterface';
 
 interface Props {}
 
 const Navbar = (props: Props): ReactElement => {
-
-	const cartItems: CartItem[] = useSelector((state:RootStateOrAny) => state.cart.cartItems)
-	console.log(cartItems);
-	
-	
+	const cartItems: CartItem[] = useSelector((state: RootStateOrAny) => state.cart.cartItems);
+	let navigate = useNavigate();
 
 	return (
 		<Flex justify="space-between" alignItems="center" boxShadow="dark-lg" h={'60px'}>
 			<Box marginLeft={10}>
-				<a href="!#">PizzaFabro</a>
+				<Text onClick={() => navigate('/')}>Pizza Fabro</Text>
 			</Box>
 			<Box marginRight={10}>
 				<Box display="inline-block">
 					<a href="!#">Login</a>
 				</Box>
 				<Box display="inline-block" marginLeft="5">
-					<a href="!#">{`Cart ${cartItems.length}`}</a>
+					<Text onClick={() => navigate('/cart')} cursor={"pointer"}>{`Cart ${cartItems.length}`}</Text>
 				</Box>
 			</Box>
 		</Flex>

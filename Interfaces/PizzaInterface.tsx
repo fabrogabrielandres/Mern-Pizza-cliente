@@ -5,6 +5,7 @@ export interface CartItem {
 	prices:Price[]
 	price:number
 	quantify:number
+	varient:string
 }
 export interface Pizza {
 	name: string;
