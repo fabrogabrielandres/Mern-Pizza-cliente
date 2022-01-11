@@ -13,11 +13,11 @@ const Navbar = (props: Props): ReactElement => {
 	return (
 		<Flex justify="space-between" alignItems="center" boxShadow="dark-lg" h={'60px'}>
 			<Box marginLeft={10}>
-				<Text onClick={() => navigate('/')}>Pizza Fabro</Text>
+				<Text onClick={() => navigate('/')} cursor={"pointer"}>Pizza Fabro</Text>
 			</Box>
 			<Box marginRight={10}>
 				<Box display="inline-block">
-					<a href="!#">Login</a>
+					<Text onClick={() => navigate('/login')} cursor={"pointer"}>Login</Text>
 				</Box>
 				<Box display="inline-block" marginLeft="5">
 					<Text onClick={() => navigate('/cart')} cursor={"pointer"}>{`Cart ${cartItems.length}`}</Text>
