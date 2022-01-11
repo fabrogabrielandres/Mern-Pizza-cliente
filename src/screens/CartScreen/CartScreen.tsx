@@ -1,14 +1,31 @@
 import React from 'react';
 import { Button, Flex, Img, VStack } from '@chakra-ui/react';
 import { Text, Box } from '@chakra-ui/layout';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../../../Interfaces/PizzaInterface';
 import { HiMinusCircle, HiPlusCircle, HiTrash } from 'react-icons/hi';
+import { addToCart, deleteToCart } from '../../features/cartSlice/cartSlice';
 
 export const CartScreen = () => {
 	const cartItems: CartItem[] = useSelector((state: RootStateOrAny) => state.cart.cartItems);
-	console.log(cartItems);
-	
+	const dispatch = useDispatch();
+
+	const decrementItems = (items: CartItem) =>
+		items.quantify > 1 && (
+			<HiMinusCircle
+				size={'5%'}
+				color="red"
+				onClick={() => dispatch(addToCart({ ...items, quantify: items.quantify - 1 }))}
+			/>
+		);
+	const incrementItems = (items: CartItem) => (
+		<HiPlusCircle
+			size={'5%'}
+			color="green"
+			onClick={() => dispatch(addToCart({ ...items, quantify: items.quantify + 1 }))}
+		/>
+	);
+	const deleteItems = (items: CartItem) => <HiTrash color="red" size={'70%'} onClick={() => dispatch(deleteToCart(items))} />;
 
 	return (
 		<Flex mt={'5%'}>
@@ -25,8 +42,10 @@ export const CartScreen = () => {
 							alignItems={'center'}
 						>
 							<VStack width={'80%'} alignItems={'flex-start'}>
-								<Text>{`${items.name} []`}</Text>
-								<Text>{`Price: ${items.quantify} * ${items.prices[0][items.varient]} = ${items.price}`}</Text>
+								<Text>{`${items.name}`}</Text>
+								<Text>{`Price: ${items.quantify} * ${items.prices[0][
+									items.varient
+								]} = ${items.price}`}</Text>
 							</VStack>
 							<Flex alignItems={'center'} h={'100px'} width={'20%'}>
 								<Box width={'100%'}>
@@ -38,14 +57,14 @@ export const CartScreen = () => {
 										objectFit={'contain'}
 									/>
 								</Box>
-								<HiTrash size={'70%'} color="red" />
+								{deleteItems(items)}
 							</Flex>
 							<Flex width={'100%'} justifyContent={'flex-start'} alignItems={'center'}>
-								<HiPlusCircle size={'5%'} color="green" />
+								{incrementItems(items)}
 								<Text mx={'3%'} color={'red'}>
 									Quantify
 								</Text>
-								<HiMinusCircle size={'5%'} color="red" />
+								{decrementItems(items)}
 							</Flex>
 						</Flex>
 					))
