@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 import { Button, Flex, Img, VStack } from '@chakra-ui/react';
 import { Text, Box } from '@chakra-ui/layout';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -35,12 +35,6 @@ export const CartScreen = () => {
 		}, 0);
 	};
 
-	useEffect(
-		() => {
-			console.log(total(cartItems));
-		},
-		[ cartItems ]
-	);
 
 	return (
 		<Flex mt={'5%'}>
