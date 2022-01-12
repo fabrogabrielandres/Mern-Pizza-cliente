@@ -31,7 +31,7 @@ export const LoginScreen = () => {
 					<Flex minH={'100vh'} align={'center'} justify={'center'}>
 						<Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
 							<Stack align={'center'}>
-								<Heading fontSize={'4xl'}>Register</Heading>
+								<Heading fontSize={'4xl'}>Login</Heading>
 							</Stack>
 							<Box rounded={'lg'} boxShadow={'lg'} p={8}>
 								<Stack spacing={4}>
@@ -64,7 +64,7 @@ export const LoginScreen = () => {
 										<Text
 											textAlign={'center'}
 											onClick={() => {
-												navigate('/login');
+												navigate('/register');
 											}}
 											cursor={'pointer'}
 										>

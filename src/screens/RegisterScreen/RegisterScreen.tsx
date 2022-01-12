@@ -15,15 +15,20 @@ import { Text } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
+import { userRegister } from '../../features/userSlice/userSlice';
+import { useDispatch } from 'react-redux';
 
 export const RegisterScreen = () => {
 	const navigate = useNavigate();
 	const [ value, setValue ] = useState('password');
+	const dispatch = useDispatch()
+	
 	return (
 		<Formik
 			initialValues={{ email: '', password: '' }}
 			onSubmit={(values, actions) => {
-				// actions.resetForm();
+				actions.resetForm();
+				dispatch(userRegister(values))
 			}}
 		>
 			{(props) => (
