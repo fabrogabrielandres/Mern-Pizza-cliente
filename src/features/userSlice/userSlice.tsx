@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const userRegister = createAsyncThunk('users/Register', async (user) => {
+
+	
 	try {
-		// const response = await axios.post(`api/pizzas/getallpizzas`);
+		 const response = await axios.post(`/api/users/register`,user)
+		 console.log(response);
+		 
 	} catch (error) {
 		// return error;
 	}

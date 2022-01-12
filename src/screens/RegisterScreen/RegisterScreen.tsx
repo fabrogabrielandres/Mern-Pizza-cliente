@@ -27,8 +27,8 @@ export const RegisterScreen = () => {
 		<Formik
 			initialValues={{ email: '', password: '' }}
 			onSubmit={(values, actions) => {
-				actions.resetForm();
 				dispatch(userRegister(values))
+				actions.resetForm();
 			}}
 		>
 			{(props) => (
